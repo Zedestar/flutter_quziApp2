@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app2/data/question_results.dart';
 import 'package:quiz_app2/screens/questions_screen.dart';
 import 'package:quiz_app2/screens/start_screen.dart';
 
@@ -10,15 +11,28 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  bool _showQuestion = false;
-  void _showQuestionFunction() {
+  bool showQuestion = true;
+  List<QuestionResults> questionResultsList = [];
+  void settingQuestionResults(
+      String questionText, String correctAnswer, String userAnswer) {
+    QuestionResults questionResults = QuestionResults(
+      questionText: questionText,
+      correntAnswer: correctAnswer,
+      userAnswer: userAnswer,
+    );
+    questionResults.settingAnswer(correctAnswer, userAnswer);
+    questionResultsList.add(questionResults);
+  }
+
+  void changerStartQuestionScreen() {
     setState(() {
-      _showQuestion = !_showQuestion;
+      showQuestion = !showQuestion;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    print(questionResultsList.length);
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -32,13 +46,11 @@ class _QuizState extends State<Quiz> {
               end: Alignment.bottomRight,
             ),
           ),
-          child: _showQuestion
-              ? QuestionScreen(
-                  backToStartScreen: _showQuestionFunction,
-                )
-              : StartScreen(
-                  onStartQuiz: _showQuestionFunction,
-                ),
+          child: showQuestion
+              ? StartScreen(takeQuestion: changerStartQuestionScreen)
+              : QuestionScreen(
+                  backToStartScreen: changerStartQuestionScreen,
+                  takeQuestionResults: settingQuestionResults),
         ),
       ),
     );

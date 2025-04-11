@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen({super.key, required this.onStartQuiz});
+  const StartScreen({super.key, required this.takeQuestion});
 
-  final VoidCallback onStartQuiz;
+  final VoidCallback takeQuestion;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -38,7 +38,7 @@ class StartScreen extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              onStartQuiz();
+              takeQuestion();
             },
             icon: Icon(
               Icons.arrow_right_alt,

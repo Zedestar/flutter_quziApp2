@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class AnswerButton extends StatelessWidget {
   const AnswerButton(
-      {super.key, required this.answerText, required this.onSelectAnswer});
+      {super.key,
+      required this.answerText,
+      required this.onSelectAnswer,
+      required this.onSettingAnswer});
 
   final String answerText;
   final VoidCallback onSelectAnswer;
+  final VoidCallback onSettingAnswer;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +19,7 @@ class AnswerButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           onSelectAnswer();
+          onSettingAnswer();
         },
         style: ElevatedButton.styleFrom(
           foregroundColor: const Color.fromARGB(255, 155, 130, 130),
