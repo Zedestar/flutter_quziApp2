@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app2/data/question_results.dart';
+import 'package:quiz_app2/data/quiz_quesions.dart';
 import 'package:quiz_app2/screens/questions_screen.dart';
 import 'package:quiz_app2/screens/results_screen.dart';
 import 'package:quiz_app2/screens/start_screen.dart';
@@ -23,6 +24,9 @@ class _QuizState extends State<Quiz> {
     );
     questionResults.settingAnswer(correctAnswer, userAnswer);
     questionResultsList.add(questionResults);
+    // if (questionResultsList.length == quizQuestions.length) {
+    //   changerStartQuestionScreen("resultsScreen");
+    // }
     print(questionResultsList.length);
   }
 
@@ -41,7 +45,8 @@ class _QuizState extends State<Quiz> {
         return StartScreen(navigateTo: changerStartQuestionScreen);
       case "questionScreen":
         return QuestionScreen(
-          backToStartScreen: changerStartQuestionScreen,
+          // backToStartScreen: changerStartQuestionScreen,
+          navigateTo: changerStartQuestionScreen,
           takeQuestionResults: settingQuestionResults,
         );
       case "resultsScreen":
