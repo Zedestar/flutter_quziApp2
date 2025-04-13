@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app2/functions/navigating_screen_function.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen({super.key, required this.takeQuestion});
+  const StartScreen({super.key, required this.navigateTo});
 
-  final VoidCallback takeQuestion;
+  final NavigationScreenCallback navigateTo;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -38,7 +39,7 @@ class StartScreen extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              takeQuestion();
+              navigateTo("questionScreen");
             },
             icon: Icon(
               Icons.arrow_right_alt,

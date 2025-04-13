@@ -5,10 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app2/functions/taking_result_callback_function.dart';
 
 class QuestionScreen extends StatefulWidget {
-  const QuestionScreen(
-      {super.key,
-      required this.backToStartScreen,
-      required this.takeQuestionResults});
+  const QuestionScreen({
+    super.key,
+    required this.backToStartScreen,
+    required this.takeQuestionResults,
+  });
   final TakeQuestionResultsCallback takeQuestionResults;
   final Function backToStartScreen;
 

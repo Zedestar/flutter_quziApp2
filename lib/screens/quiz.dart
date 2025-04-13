@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app2/data/question_results.dart';
 import 'package:quiz_app2/screens/questions_screen.dart';
+import 'package:quiz_app2/screens/results_screen.dart';
 import 'package:quiz_app2/screens/start_screen.dart';
 
 class Quiz extends StatefulWidget {
@@ -11,7 +12,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  bool showQuestion = true;
+  String currentScreen = "startScreen";
   List<QuestionResults> questionResultsList = [];
   void settingQuestionResults(
       String questionText, String correctAnswer, String userAnswer) {
@@ -22,17 +23,38 @@ class _QuizState extends State<Quiz> {
     );
     questionResults.settingAnswer(correctAnswer, userAnswer);
     questionResultsList.add(questionResults);
+    print(questionResultsList.length);
   }
 
-  void changerStartQuestionScreen() {
+  void changerStartQuestionScreen(String screenToSet) {
     setState(() {
-      showQuestion = !showQuestion;
+      currentScreen = screenToSet;
     });
+    // _theScreenFunction(screenToSet);
+    print(
+        "#########################The change screen is called####################");
+  }
+
+  Widget _theScreenFunction(String screenToSet) {
+    switch (screenToSet) {
+      case "startScreen":
+        return StartScreen(navigateTo: changerStartQuestionScreen);
+      case "questionScreen":
+        return QuestionScreen(
+          backToStartScreen: changerStartQuestionScreen,
+          takeQuestionResults: settingQuestionResults,
+        );
+      case "resultsScreen":
+        return ResultsScreen(
+          questionResultsList: questionResultsList,
+        );
+      default:
+        return StartScreen(navigateTo: changerStartQuestionScreen);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print(questionResultsList.length);
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -46,13 +68,19 @@ class _QuizState extends State<Quiz> {
               end: Alignment.bottomRight,
             ),
           ),
-          child: showQuestion
-              ? StartScreen(takeQuestion: changerStartQuestionScreen)
-              : QuestionScreen(
-                  backToStartScreen: changerStartQuestionScreen,
-                  takeQuestionResults: settingQuestionResults),
+          child: _theScreenFunction(currentScreen),
         ),
       ),
     );
   }
 }
+
+
+ // currentScreen
+          //     ? StartScreen(
+          //         takeQuestion: changerStartQuestionScreen,
+          //       )
+          //     : QuestionScreen(
+          //         backToStartScreen: changerStartQuestionScreen,
+          //         takeQuestionResults: settingQuestionResults,
+          //       ),
