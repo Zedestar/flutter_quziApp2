@@ -7,12 +7,17 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    for (int i = 0; i < questionResultsList.length; i++) {
+      print("Question ${i + 1}: ${questionResultsList[i].questionText}");
+      print("Your Answer: ${questionResultsList[i].userAnswer}");
+      print("Correct Answer: ${questionResultsList[i].correntAnswer}");
+    }
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
-            "Hey there, I am the result screen....",
+            "Question results........",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -23,7 +28,7 @@ class ResultsScreen extends StatelessWidget {
 
           // Use a constrained height ListView so it doesn't overflow
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.7,
             child: ListView.builder(
               itemCount: questionResultsList.length,
               itemBuilder: (context, index) {
@@ -35,7 +40,7 @@ class ResultsScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isCorrect ? Colors.green[100] : Colors.red[100],
+                    color: isCorrect ? Colors.green : Colors.red,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(

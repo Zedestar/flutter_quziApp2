@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app2/data/question_results.dart';
-import 'package:quiz_app2/data/quiz_quesions.dart';
 import 'package:quiz_app2/screens/questions_screen.dart';
 import 'package:quiz_app2/screens/results_screen.dart';
 import 'package:quiz_app2/screens/start_screen.dart';
@@ -24,19 +23,12 @@ class _QuizState extends State<Quiz> {
     );
     questionResults.settingAnswer(correctAnswer, userAnswer);
     questionResultsList.add(questionResults);
-    // if (questionResultsList.length == quizQuestions.length) {
-    //   changerStartQuestionScreen("resultsScreen");
-    // }
-    print(questionResultsList.length);
   }
 
   void changerStartQuestionScreen(String screenToSet) {
     setState(() {
       currentScreen = screenToSet;
     });
-    // _theScreenFunction(screenToSet);
-    print(
-        "#########################The change screen is called####################");
   }
 
   Widget _theScreenFunction(String screenToSet) {
@@ -45,7 +37,6 @@ class _QuizState extends State<Quiz> {
         return StartScreen(navigateTo: changerStartQuestionScreen);
       case "questionScreen":
         return QuestionScreen(
-          // backToStartScreen: changerStartQuestionScreen,
           navigateTo: changerStartQuestionScreen,
           takeQuestionResults: settingQuestionResults,
         );

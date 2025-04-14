@@ -8,12 +8,10 @@ import 'package:quiz_app2/functions/taking_result_callback_function.dart';
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({
     super.key,
-    // required this.backToStartScreen,
     required this.navigateTo,
     required this.takeQuestionResults,
   });
   final TakeQuestionResultsCallback takeQuestionResults;
-  // final Function backToStartScreen;
   final NavigationScreenCallback navigateTo;
 
   @override
@@ -23,18 +21,21 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   int questionIndexNumber = 0;
   late var currentQuestion;
+  late List<String> shuffledAnswers;
 
-  @override
-  void initState() {
-    super.initState();
-    currentQuestion = quizQuestions[questionIndexNumber];
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   currentQuestion = quizQuestions[questionIndexNumber];
+  //   shuffledAnswers = currentQuestion.getShuffledAnswers();
+  // }
 
   void functionToChangeQuestion() {
     setState(() {
       if (questionIndexNumber < quizQuestions.length - 1) {
-        questionIndexNumber++;
         currentQuestion = quizQuestions[questionIndexNumber];
+        shuffledAnswers = currentQuestion.getShuffledAnswers();
+        questionIndexNumber++;
       } else {
         widget.navigateTo("resultsScreen");
         // widget.backToStartScreen();
@@ -44,18 +45,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    currentQuestion = quizQuestions[questionIndexNumber];
+    shuffledAnswers = currentQuestion.getShuffledAnswers();
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(currentQuestion.questionText,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.lato(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold)),
+          Text(
+            currentQuestion.questionText,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.lato(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           Container(
             width: double.infinity,
             margin: EdgeInsets.symmetric(
@@ -67,18 +73,21 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                ...currentQuestion.getShuffledAnswers().map(
+                ...shuffledAnswers.map(
                   (answer) {
                     return AnswerButton(
                       answerText: answer,
-                      onSelectAnswer: functionToChangeQuestion,
                       onSettingAnswer: () {
                         widget.takeQuestionResults(
                           currentQuestion.questionText,
                           currentQuestion.answers[0],
                           answer,
                         );
+                        print(
+                          "Question: ${currentQuestion.questionText}, Correct Answer: ${currentQuestion.answers[0]}, User Answer: $answer",
+                        );
                       },
+                      onSelectAnswer: functionToChangeQuestion,
                     );
                   },
                 ),
@@ -90,30 +99,3 @@ class _QuestionScreenState extends State<QuestionScreen> {
     );
   }
 }
-
-
-
-
-// OutlinedButton.icon(
-      //   style: OutlinedButton.styleFrom(
-      //     foregroundColor: Colors.white,
-      //     padding: const EdgeInsets.symmetric(
-      //       horizontal: 20,
-      //       vertical: 10,
-      //     ),
-      //   ),
-      //   onPressed: () {
-      //     widget.backToStartScreen();
-      //   },
-      //   icon: const Icon(
-      //     Icons.arrow_back,
-      //     color: Colors.white,
-      //   ),
-      //   label: const Text(
-      //     "Back",
-      //     style: TextStyle(
-      //         fontSize: 20,
-      //         fontWeight: FontWeight.bold,
-      //         color: Colors.white),
-      //   ),
-      // ),
