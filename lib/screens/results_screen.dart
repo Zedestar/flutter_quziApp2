@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app2/data/question_results.dart';
+import 'package:quiz_app2/functions/navigating_screen_function.dart';
 
 class ResultsScreen extends StatelessWidget {
-  const ResultsScreen({super.key, required this.questionResultsList});
+  const ResultsScreen({
+    super.key,
+    required this.questionResultsList,
+    required this.navigateTo,
+  });
   final List<QuestionResults> questionResultsList;
+  final NavigationScreenCallback navigateTo;
 
   @override
   Widget build(BuildContext context) {
+    int correctAnsersCount = 0;
     for (int i = 0; i < questionResultsList.length; i++) {
-      print("Question ${i + 1}: ${questionResultsList[i].questionText}");
-      print("Your Answer: ${questionResultsList[i].userAnswer}");
-      print("Correct Answer: ${questionResultsList[i].correntAnswer}");
+      if (questionResultsList[i].userAnswer ==
+          questionResultsList[i].correntAnswer) {
+        correctAnsersCount++;
+      }
     }
+
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            "Question results........",
+          Text(
+            "Got right $correctAnsersCount out of ${questionResultsList.length}",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -40,7 +50,9 @@ class ResultsScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isCorrect ? Colors.green : Colors.red,
+                    color: isCorrect
+                        ? const Color.fromARGB(255, 82, 37, 133)
+                        : const Color.fromARGB(255, 112, 42, 37),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -59,6 +71,30 @@ class ResultsScreen extends StatelessWidget {
                   ),
                 );
               },
+            ),
+          ),
+          OutlinedButton.icon(
+            onPressed: () {
+              navigateTo("startScreen");
+            },
+            label: Text(
+              "Retake the quiz",
+              style: GoogleFonts.lato(color: Colors.white),
+            ),
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+            ),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: const Color.fromARGB(255, 82, 37, 133),
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 20,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           ),
         ],

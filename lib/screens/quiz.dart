@@ -43,6 +43,7 @@ class _QuizState extends State<Quiz> {
       case "resultsScreen":
         return ResultsScreen(
           questionResultsList: questionResultsList,
+          navigateTo: changerStartQuestionScreen,
         );
       default:
         return StartScreen(navigateTo: changerStartQuestionScreen);
@@ -70,13 +71,3 @@ class _QuizState extends State<Quiz> {
     );
   }
 }
-
-
- // currentScreen
-          //     ? StartScreen(
-          //         takeQuestion: changerStartQuestionScreen,
-          //       )
-          //     : QuestionScreen(
-          //         backToStartScreen: changerStartQuestionScreen,
-          //         takeQuestionResults: settingQuestionResults,
-          //       ),
